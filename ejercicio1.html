@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 1</title>
+</head>
+
+<body>
+    <div>
+        <div style="width: 40%;margin: 0 auto">
+            <h2>
+                Escríbenos !!!
+            </h2>
+            <div class="resultado" style="color:green;font-style: italic">
+            </div>
+            <form id="formulario">
+                <div>
+                    <div style="display: flex;flex-direction: column;">
+                        <label>
+                            Nombre completo
+                        </label>
+                        <input id="nombre" type="text">
+                        <p class="errorNombre" style="color:red;font-style: italic;"></p>
+                    </div>
+                    <div style="display: flex;flex-direction: column;">
+                        <label>
+                            Asunto
+                        </label>
+                        <input id="asunto" type="text">
+                        <p class="errorAsunto" style="color:red;font-style: italic;"></p>
+                    </div>
+                </div>
+                <div style="display: flex;flex-direction: column;">
+                    <label>
+                        Mensaje
+                    </label>
+                    <textarea id="mensaje"></textarea>
+                    <p class="errorMensaje" style="color:red;font-style: italic;"></p>
+                </div>
+                <div>
+                    <button id="botton" type="submit">
+                        Envíar mensaje
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+
+        function notificacion() {
+            var resultado = document.querySelector(".resultado");
+            resultado.textContent = "Mensaje envíado exitosamente."
+        }
+
+        document.getElementById("formulario").addEventListener("submit", function (evento) {
+            evento.preventDefault();
+
+            let nombre = document.getElementById("nombre");
+            let asunto = document.getElementById("asunto");
+            let mensaje = document.getElementById("mensaje");
+
+            let regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
+            let regexMensaje = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s.,:"]+$/
+
+            let errorNombre = document.querySelector(".errorNombre");
+            let errorAsunto = document.querySelector(".errorAsunto");
+            let errorMensaje = document.querySelector(".errorMensaje");
+
+            errorNombre.textContent = '';
+            errorAsunto.textContent = '';
+            errorMensaje.textContent = '';
+
+            if (!regex.test(nombre.value)) {
+                errorNombre.textContent = "Ingrese un nombre válido.";
+            }
+
+            if (!regex.test(asunto.value)) {
+                errorAsunto.textContent = "Ingrese un asunto válido.";
+            }
+
+            if (!regexMensaje.test(mensaje.value)) {
+                errorMensaje.textContent = "Ingrese un mensaje válido"
+            }
+
+            if (mensaje.value === '') {
+                errorMensaje.textContent = "Debe redactar un mensaje para envíar.";
+            }
+
+            if (asunto.value === '' || nombre.value === '') {
+                errorAsunto.textContent = "Debe llenar este campo para envíar el mensaje";
+            }
+
+            if (regex.test(nombre.value) && regex.test(asunto.value) && regexMensaje.test(mensaje.value)) {
+                notificacion();
+            }
+        });
+    </script>
+</body>
+
+</html>
